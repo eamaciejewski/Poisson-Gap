@@ -1,13 +1,14 @@
-#! /usr/bin/python
+#!/usr/bin/env python3
 
 # Usage ./Poisson_Gap.py seed sampling_points total_points
 # Ex: ./Poisson_Gap.py 1234 64 512
 
-from __future__ import division
+import argparse
 import random
 import math
 import string
 import sys
+
 
 
 def poisson(lmbd):
@@ -23,9 +24,14 @@ def poisson(lmbd):
     return k-1
 
 def main():
-    initial_seed = string.atof(sys.argv[1])
-    sampling_points = string.atoi(sys.argv[2])
-    total_size = string.atoi(sys.argv[3])
+    parser = argparse.ArgumentParser()
+    parser.add_argument("-s", "--seed", required=True, type=int, help="initial seed")
+    parser.add_argument("-sp", "--sampling_points", required=True, type=int, help="number of sampling points")
+    parser.add_argument("-tp", "--total_points", required=True, type=int, help="total number of points")
+    args = parser.parse_args()
+    initial_seed = string.atof(args.seed)
+    sampling_points = string.atoi(args.sampling_points)
+    total_size = string.atoi(args.total_points)
     ld = total_size/sampling_points
     weight = 2.0
     current_num_points = 0

@@ -80,12 +80,14 @@ def main():
         count += 1
         final = np.append(final, vector_smpl_points)
  
-#prints frequency array and creates histogram of data. The historgram looks pretty good, but I am unsure
-#about the end numbers. Please look at the numbers and see if it is what you are looking for, especially 
-#towards the end of the histogram range
-#no bell curve but I assume this will change when the total iterations of the sampling is increased   
+#prints frequency array and creates histogram of data   
     frequency_array(final.astype(int))
-    plt.hist(final.astype(int), bins=np.arange(np.amax(final.astype(int))+1))
+    plt.hist(final.astype(int), bins=np.arange(total_size+1)-0.5)
+    plt.xlim([0,total_size])
+    plt.ylim([0,count])
+    plt.title('Poisson Gap distribution for %s schedules; seed = %s, sampling points = %s, total points = %s'%(total, args.seed, sampling_points, total_size))
+    plt.xlabel('Sampling Points')
+    plt.ylabel('Frequency')
     plt.show()
 
     

@@ -1,0 +1,8 @@
+#!/usr/bin/env python3
+
+import numpy as np
+
+s=np.array([1,1,1,2,3,3,4,4,4,5,5,5,5,5,10])
+y=np.bincount(s)
+z=np.arange(np.amax(s)+1)
+print(np.vstack((z,y[z])).T)

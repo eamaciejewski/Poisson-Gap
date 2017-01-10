@@ -41,15 +41,19 @@ def plot_samplingpoint_histogram(final, total_size, count, total, sampling_point
     plt.show()
 
 #plots histogram of gap size frequencies within one schedule    
-def plot_gap_histogram(schedule):
+def plot_gap_histogram(num_schedules, single_schd_len, schedules):
     gaps = np.array([])
+    point = 0
     
-    for point in range (len(schedule)-1):
-        gaps = np.append(gaps, (schedule[point+1]-schedule[point]))
-        
+    for num in range(num_schedules):
+        for place in range(single_schd_len-1):
+            gaps = np.append(gaps, (schedules[point+1]-schedules[point]))
+            point += 1
+        point += 1
+    
     plt.hist(gaps.astype(int), bins=np.arange(len(gaps)+1)-0.5)
     plt.xlim([0,np.amax(gaps)+1])
-    plt.title('1D Poisson Gap Size Distribution')
+    plt.title('Poisson Gap Size Distribution')
     plt.xlabel('Gap Size')
     plt.ylabel('Frequency')
     plt.show()
@@ -112,13 +116,13 @@ def main():
  
 #prints frequency array and creates histogram of data   
     #frequency_array(final.astype(int))
-    plot_samplingpoint_histogram(final, args.total_points, count, total, args.sampling_points, original_seed)
-    args.seed = original_seed
+    #plot_samplingpoint_histogram(final, args.total_points, count, total, args.sampling_points, original_seed)
+    plot_gap_histogram(total, args.sampling_points, final)
     
     
     
 #print(poisson_1D())
-#plot_gap_histogram(poisson_1D())
+#plot_gap_histogram(1, args.sampling_points, poisson_1D())
 main()
 
 

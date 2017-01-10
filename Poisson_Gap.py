@@ -47,10 +47,11 @@ def plot_gap_histogram(num_schedules, single_schd_len, schedules):
     
     for num in range(num_schedules):
         for place in range(single_schd_len-1):
-            gaps = np.append(gaps, (schedules[point+1]-schedules[point]))
+            gaps = np.append(gaps, (schedules[point+1]-schedules[point])-1)
             point += 1
         point += 1
     
+    print(gaps)
     plt.hist(gaps.astype(int), bins=np.arange(len(gaps)+1)-0.5)
     plt.xlim([0,np.amax(gaps)+1])
     plt.title('Poisson Gap Size Distribution')
@@ -78,17 +79,18 @@ def poisson_1D():
     
 
         while current_num_points != sampling_points: 
-            gap_size = 0
+            time_increment = 0
             current_num_points = 0
             vector_smpl_points = np.array([])
 
-            while gap_size < total_size:
-                vector_smpl_points = np.append(vector_smpl_points, gap_size) #stores point
-                gap_size += 1 #puts pointer at next point
+            while time_increment < total_size:
+                vector_smpl_points = np.append(vector_smpl_points, time_increment) #stores point
+                time_increment += 1 #puts pointer at next point
                 current_num_points += 1 
 
                 #creates the gap
-                gap_size += poisson((ld-1.0)*weight*math.sin(gap_size/(total_size+1)*math.pi))
+                #time_increment += poisson((ld-1.0)*weight*math.sin(time_increment/(total_size+1)*math.pi))
+                time_increment += poisson((ld-1.0)*weight)
 
             #adjusts weight to search for correct number of points
             if current_num_points > sampling_points:
@@ -105,7 +107,7 @@ def main():
 #total = 3 used for testing purposes, how many times should the function iterate to get sufficient data?
     final = np.array([])
     count = 0
-    total = 3
+    total = 2
     original_seed = args.seed
 
     while count != total:
@@ -117,12 +119,13 @@ def main():
 #prints frequency array and creates histogram of data   
     #frequency_array(final.astype(int))
     #plot_samplingpoint_histogram(final, args.total_points, count, total, args.sampling_points, original_seed)
+    print(final)
     plot_gap_histogram(total, args.sampling_points, final)
     
     
     
-#print(poisson_1D())
+print(poisson_1D())
 #plot_gap_histogram(1, args.sampling_points, poisson_1D())
-main()
+#main()
 
 

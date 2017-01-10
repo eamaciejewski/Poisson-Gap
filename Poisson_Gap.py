@@ -9,6 +9,7 @@ import math
 import numpy as np
 import matplotlib.pyplot as plt
 
+# testing commit to github from pycharm
 
 #helps create gap for poisson sampling
 def poisson(lmbd):

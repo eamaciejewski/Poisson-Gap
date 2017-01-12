@@ -52,7 +52,7 @@ def plot_gap_histogram(num_schedules, single_schd_len, schedules):
             point += 1
         point += 1
     
-    print(gaps)
+    
     plt.hist(gaps.astype(int), bins=np.arange(len(gaps)+1)-0.5)
     plt.xlim([0,np.amax(gaps)+1])
     plt.title('Poisson Gap Size Distribution')
@@ -122,10 +122,27 @@ def main():
     #plot_samplingpoint_histogram(final, args.total_points, count, total, args.sampling_points, original_seed)
     print(final)
     plot_gap_histogram(total, args.sampling_points, final)
+
+def poisson_2D():
+    two = poisson_1D()
+
+    for num in range(args.sampling_points-1):
+        args.seed += 1
+        two = np.vstack([two, poisson_1D()])    
+    print(two)
+    
+    for num in range(args.sampling_points):
+        plot_gap_histogram(1, args.sampling_points, two[num])
+    two = two.transpose()
+    print(two)
+ 
+    for num in range(args.sampling_points):
+        plot_gap_histogram(1, args.sampling_points, two[num])
+  
     
     
     
-print(poisson_1D())
+poisson_2D()
 #plot_gap_histogram(1, args.sampling_points, poisson_1D())
 #main()
 

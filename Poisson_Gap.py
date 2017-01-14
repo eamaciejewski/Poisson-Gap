@@ -123,16 +123,17 @@ def main():
     print(final)
     plot_gap_histogram(total, args.sampling_points, final)
 
-def poisson_2D():
+def poisson_2D(num_schedules):
     two = poisson_1D()
 
-    for num in range(args.sampling_points-1):
+    for num in range(num_schedules-1):
         args.seed += 1
         two = np.vstack([two, poisson_1D()])    
     print(two)
     
-    for num in range(args.sampling_points):
+    for num in range(num_schedules):
         plot_gap_histogram(1, args.sampling_points, two[num])
+    
     two = two.transpose()
     print(two)
  
@@ -142,7 +143,7 @@ def poisson_2D():
     
     
     
-poisson_2D()
+poisson_2D(15)
 #plot_gap_histogram(1, args.sampling_points, poisson_1D())
 #main()
 
